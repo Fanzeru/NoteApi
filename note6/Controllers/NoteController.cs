@@ -11,23 +11,7 @@ namespace note6.Controllers
     [ApiController]
     public class notesController : ControllerBase
     {
-        private static List<Note> noteList = new List<Note>
-            {
-                new Note {
-                    id = 1,
-                    title = "new note",
-                    body = "bl",
-                    crdate=2021,
-                    update=2022
-                },
-                    new Note {
-                    id = 2,
-                    title = "second note",
-                    body = "body of second note",
-                    crdate=2022,
-                    update=2023
-                }
-            };
+        
         private readonly DataContext _context;
 
         public notesController(DataContext context)
@@ -47,7 +31,7 @@ namespace note6.Controllers
             var dbNote = await _context.Notes.FindAsync(id);
             if (dbNote == null)
                 return BadRequest("note dont found.");
-            return Ok(await _context.Notes.ToListAsync());
+            return Ok(dbNote);
         }
         [HttpPost]
         public async Task<ActionResult<List<Note>>> AddNote(Note dbNote)
